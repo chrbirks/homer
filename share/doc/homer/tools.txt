@@ -1,0 +1,6 @@
+homer tools
+
+Installs libraries and tools such as fonts, Emacs, SpaceVim etc.
+
+OPTIONS:
+

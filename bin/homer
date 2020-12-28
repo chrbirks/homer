@@ -1,0 +1,31 @@
+#!/bin/zsh
+#
+# Executes Homer commands
+
+# All variables are based off this single key, which is the location of
+# this particular file.
+case $0 in
+ /*) HOMER_SCRIPT_FILE=$0;;
+  *) HOMER_SCRIPT_FILE=$PWD/$0;;
+esac
+
+# Load global configuration
+export HOMER_SCRIPT_PATH=$(dirname $HOMER_SCRIPT_FILE)
+export HOMER_PATH=$(dirname $HOMER_SCRIPT_PATH)
+export HOMER_COMMAND=$1
+export HOMER_EXECUTABLE=$HOMER_SCRIPT_PATH/homer-$HOMER_COMMAND
+
+if [ -z $HOMER_HOME ]; then
+  export HOMER_HOME=$HOME
+fi
+
+pushd $HOMER_PATH
+export HOMER_PREFIX=$PWD
+popd
+
+# Execute the command or run `homer help` if not found.
+if [[ -e $HOMER_EXECUTABLE ]]; then
+  source "$HOMER_EXECUTABLE"
+else
+  source "$HOMER_SCRIPT_PATH/homer-help"
+fi

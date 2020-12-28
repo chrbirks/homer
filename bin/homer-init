@@ -1,0 +1,111 @@
+#!/bin/zsh
+#
+# Copy home directory template files to the user's home directory and
+# initialize it as a Git repository.
+
+source "$HOMER_PATH/share/homer/cli.zsh"
+
+if [[ -e "$HOMER_HOME/.git" ]]; then
+  homer_error "There is already an existing Git repository in $HOMER_HOME."
+  exit 1
+fi
+
+# Parse script arguments
+zmodload zsh/zutil
+zparseopts -D -E -F - t:=tmpl_dir -template:=tmpl_dir r:=repo -repo:=repo m:=msg -message:=msg || exit 1
+# Remove first -- or -
+end_opts=$@[(i)(--|-)]
+set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
+
+tmpl_dir=$tmpl_dir[2]
+repo=$repo[2]
+msg=$msg[2]
+
+# echo tmpl_dir "$tmpl_dir"
+# echo repo "$repo"
+
+# Sanity check of parameters
+if [[ "$tmpl_dir" = "" ]]; then
+  # use_repo=1
+  if [[ "$repo" = "" ]]; then
+    # Neither tmpl_dir nor repo defined
+    echo Usage: $(basename "$0") "-t|--template DIR | -r|--repo GITREPO [-m|--message MESSAGE]"
+    exit 1
+  fi
+fi
+if [[ ! "$repo" = "" ]]; then
+  use_repo=1
+  if [[ ! "$tmpl_dir" = "" ]]; then
+    # Both tmpl_dir and repo defined
+    echo Error: Cannot set both --template and --repo
+    exit 1
+  fi
+else
+  use_tmpl_dir=1
+fi
+if [[ "$use_tmpl_dir" -eq 1 ]]; then
+  if [[ ! -d "$tmpl_dir" ]]; then
+    echo Error: Directory does not exist: "$tmpl_dir"
+    exit 1
+  fi
+fi
+
+# echo use_tmpl_dir "$use_tmpl_dir"
+# echo use_repo "$use_repo"
+# echo msg "$msg"
+
+# exit 99
+
+
+# Initialize from a Git repo
+if [ "$use_repo" -eq 1 ]; then
+  git clone --no-checkout $repo /tmp/homer || exit 1
+  pushd $HOMER_HOME
+  echo "Moving Git repo into $HOMER_HOME"
+  mv /tmp/homer/.git .git
+  echo "Resetting Git repo to HEAD"
+  #git reset --hard HEAD
+  git reset HEAD
+  # New and identical files will show up as deleted with git status. Revert their deleted status.
+  git ls-files --deleted | xargs git checkout -- 
+  popd
+  echo "Done - Check current differences from origin repo with 'git status'"
+
+# Initialize from a template directory
+elif [ "$use_tmpl_dir" -eq 1 ]; then
+  # Ensure $msg is set
+  if [ -z "$msg" ]; then
+    msg="Initialize home directory."
+  fi
+
+  git init $HOMER_HOME
+
+  # FIXME: For some reason $PATH is delete by running the find command below
+  tmppath="$PATH"
+
+  find "$tmpl_dir" -type f -printf '%P\0' |
+    while read -d $'\0' path; do
+      #fname=$(basename "$path")
+      if [[ ! "$path" == *".git/"* ]]; then # Skip everything under .git/
+        echo "Copying from template: $path"
+        template_file="$tmpl_dir/$path"
+        local_file=$HOMER_HOME/"$path"
+        # if local_file doesn't exist, just copy
+        if [ ! -e "$local_file" ]; then
+          /usr/bin/cp "$template_file" "$local_file"
+        fi
+        # else do a meld diff if files differ
+        /usr/bin/diff "$template_file" "$local_file" > /dev/null
+        if [ $? -eq 1 ]; then
+          /usr/bin/meld "$template_file" "$local_file" 2> /dev/null
+        fi
+
+        /usr/bin/git add "$local_file"
+      fi
+    done
+
+  # Restore $PATH
+  export PATH="$tmppath"
+
+  homer_commit_added $msg
+fi

@@ -1,0 +1,14 @@
+homer init -t/-r REPO [-m MESSAGE] 
+
+Sets up your home directory for use with Homer. By default, it
+initializes a new Git repo in $HOME and copies in the base template
+files/directories, but you can optionally pass in a remote Git repo URL
+to form the base for your home directory configuration. This is useful
+if you maintain a "dotfiles" repo and want to copy your configuration
+between machines.
+
+OPTIONS:
+
+  -t/--template DIR : Dot files template dir.
+  -r/--repo DIR     : Dot files Git repository.
+  -m MESSAGE        : Customize the initial message when committing to Git.

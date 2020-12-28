@@ -1,0 +1,266 @@
+#!/bin/zsh
+
+# Clone tools from Github repos and install them if required.
+# Check if tool is in PATH first, then check if that tool is
+# a high enough version, ask to clone and install from Github,
+# npm, snap, etc. otherwise.
+# TODO: Catch errors and better printing
+
+# FIXME: Move this to somewhere else
+export XDG_CONFIG_HOME=~/.config
+
+source "$HOMER_PATH/share/homer/cli.zsh"
+
+## Parse script arguments
+#zmodload zsh/zutil
+#zparseopts -D -E -F - m:=msg -message:=msg t:=tmpl_dir -template:=tmpl_dir || exit 1
+## Remove first -- or -
+#end_opts=$@[(i)(--|-)]
+#set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
+#
+#msg=$msg[2]
+#tmpl_dir=$tmpl_dir[2]
+#
+## Check that $tmpl_dir is set and exists
+#if [ -z "$tmpl_dir" ]; then
+#  echo Usage: $(basename "$0") "-t|--template DIR/REPO [-m|--message MESSAGE]"
+#  exit 1
+#elif [ ! -d "$tmpl_dir" ]; then
+#  echo Directory does not exist: "$tmpl_dir"
+#  exit 1
+#fi
+
+#if ! type "pacman" > /dev/null; then
+#  echo "--- Error: No pacman command found"
+#  exit 1
+#fi
+#if ! type "apt" > /dev/null; then
+#  echo "--- Error: No pacman or apt command found"
+#  exit 1
+#fi
+
+
+##############################################################
+# # Required packages
+# zsh >=5.8
+# meld
+# cp
+# diff
+# make
+# curl
+# bash
+#
+# # Optional
+# yay
+# rg (ripgrep)
+# tmux
+# python3
+# cargo (rust)
+# xset (for tmux)
+# xclip (for tmux)
+# cmake (for compiling libvterm)
+
+echo "--- Installing required packages -------------------------------"
+if type "yay" > /dev/null; then
+  sudo pacman -S zsh yay git meld curl ripgrep tmux xsel xclip rust vim cmake autoconf
+elif type "apt" > /dev/null; then
+  sudo apt install zsh wget meld curl ripgrep tmux xsel xclip rustc vim make cmake autoconf python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev
+else
+  echo "--- ERROR: Not Arch or Debian system -------------------"
+  exit 1
+fi
+
+echo Change default shell to zsh
+chsh
+
+##############################################################
+# oh-my-zsh
+echo "--- Installing oh-my-zsh -------------------------------"
+# Path to your oh-my-zsh installation
+export ZSH=$XDG_CONFIG_HOME/zsh/.oh-my-zsh
+RUNZSH=no KEEP_ZSHRC=yes sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
+##############################################################
+# Fonts
+# Install the p10k prefered MesloLGS NF font
+echo "--- Installing MesloLGS NF font ----------------------"
+if type "yay" > /dev/null; then
+  yay -S ttf-meslo-nerd-font-powerlevel10k nerd-fonts-hack
+  # Update user and root font cache
+  fc-cache -f -v
+  sudo fc-cache -f -v
+  echo "--- NOTE: Restart your terminal for fonts to be updated"
+elif type "apt" > /dev/null; then
+  wget -O - https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip > /tmp/Meslo.zip
+  mkdir ~/.local/share/fonts
+  unzip /tmp/Meslo.zip -d ~/.local/share/fonts/
+else
+  echo "--- Skipping: No yay command found -------------------"
+fi
+
+
+##############################################################
+# powerline statusline plugin
+echo "--- Installing Powerline statusline plugin -------------"
+if type "yay" > /dev/null; then
+  yay -S powerline
+elif type "apt" > /dev/null; then
+  sudo apt install python3-powerline
+else
+  echo "--- Skipping: No yay command found -------------------"
+fi
+sudo apt install powerline
+
+
+##############################################################
+# fzf
+echo "--- Installing command-line fuzzy finder -------------"
+if type "yay" > /dev/null; then
+  yay -S fzf
+elif type "apt" > /dev/null; then
+  sudo apt install fzf
+else
+  echo "--- Skipping: No yay command found -------------------"
+fi
+sudo apt install fzf
+
+
+##############################################################
+# zsh plugins
+echo "--- Installing Zsh plugin command-not-found -----------"
+if type "yay" > /dev/null; then
+  yay -S pkgfile && sudo pkgfile --update
+else
+  echo "--- Skipping: No yay command found -----------------"
+fi
+
+echo "--- Installing Zsh plugin fzf-zsh-completions -----------"
+git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+
+echo "--- Installing Zsh plugin zsh-autosuggestions -----------"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+
+echo "--- Installing Zsh plugin zsh-syntax-highlighting -------"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+
+
+##############################################################
+# p10k
+echo "--- Installing Powerlevel10k ---------------------------"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+
+
+##############################################################
+# alacritty
+echo "--- Installing Alacritty ---------------------------"
+if type "yay" > /dev/null; then
+  yay -S alacritty
+elif type "apt" > /dev/null; then
+  sudo apt install libfontconfig libfontconfig1-dev libxmu-dev libxmu-headers freeglut3-dev libxext-dev libxi-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+  cargo install alacritty
+else
+  echo "--- Skipping: No yay command found -----------------"
+fi
+
+
+##############################################################
+# emacs-dev
+echo "--- Installing Emacs from source ---------------------"
+git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
+if [ $? -eq 0 ]; then
+  pushd .
+  cd $HOME/etc/emacs-dev || exit 1
+  git checkout emacs-27
+  make clean && ./autogen.sh && ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && make
+  popd
+else
+  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+fi
+
+
+##############################################################
+# Chemacs Emacs profile switcher
+echo "--- Installing Chemacs from source ------------------"
+git clone https://github.com/plexus/chemacs.git $HOME/etc/chemacs
+if [ $? -eq 0 ]; then
+  pushd .
+  cd $HOME/etc/chemacs || exit 1
+  ./install.sh
+  popd
+else
+  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+fi
+
+
+##############################################################
+# spacemacs
+echo "--- Installing Spacemacs from source ------------------"
+git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
+if [ $? -eq 0 ]; then
+  pushd .
+  cd $HOME/etc/spacemacs.d || exit 1
+  git checkout develop
+  popd
+else
+  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+fi
+
+
+##############################################################
+# emacs-libvterm?
+
+
+##############################################################
+# hdl_checker
+echo "--- Installing hdl-checker -----------------------------"
+if type "pip" > /dev/null; then
+  pip install hdl-checker --user --upgrade
+else
+  echo "Skipping: No pip command found -----------------------"
+fi
+
+
+##############################################################
+# svls
+echo "--- Installing svls -------------------------------"
+echo "--- Skipping svls for now -------------------------"
+if type "cargo" > /dev/null; then
+  cargo install svls
+else
+  echo "Skipping: No cargo command found -----------------------"
+fi
+
+##############################################################
+# spacevim
+echo "--- Installing SpaceVim -------------------------------"
+if type "yay" > /dev/null; then
+  yay -S xorg-mkfontscale
+  curl -sLf https://spacevim.org/install.sh | bash
+elif type "apt" > /dev/null; then
+  sudo apt install xfonts-utils
+  curl -sLf https://spacevim.org/install.sh | bash
+else
+  echo "--- Skipping: No yay command found -----------------"
+fi
+
+
+##############################################################
+# tmux tpm plugin manager
+echo "--- Installing Tmux Plugin Manager -----------"
+#git clone https://github.com/tmux-plugins/tpm $HOME/etc/tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+
+echo "--- Installations finished ------------------------------"
+echo "--- Things to do manually:"
+echo "--- 1) Open $XDG_CONFIG_HOME/zsh/.p10k.zsh and insert the following modelines under 'typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=('\n
+	timewarrior\n
+	quartus_env\n
+	vivado_env\n
+	questa_env\n
+	vcs_env"
+echo "--- 2) Open $XDG_CONFIG_HOME/tmux/.tmux.conf and install plugins with prefix + I, prefix + U"
+echo "--- 3) Restart open terminals"
+echo "--- 4) Start Tmux and reload Tmux config file"
+echo "--- 5) Start Spacemacs for the first time and a ~/.config/spacemacs/.spacemacs.env will be generated. Verify the contents."
+

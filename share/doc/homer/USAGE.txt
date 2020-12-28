@@ -1,0 +1,15 @@
+Usage: homer COMMAND [ARGUMENTS]
+
+Homer is your home directory manager. It helps manage things like
+plugins, aliases, and dotfiles. For more information on this software,
+type `man homer`.
+
+Commands:
+
+- help      View this and other command help.
+- init      Initialize a home directory. Use -c to clone an existing
+            home directory repo.
+- tools     Install packages, libraries and programs required. Works
+            on Arch and Debian based systems.
+
+Type `homer help COMMAND` to get help on a particular command.
