@@ -70,8 +70,8 @@ else
   exit 1
 fi
 
-echo Change default shell to zsh
-chsh
+#echo Change default shell to zsh
+#chsh
 
 ##############################################################
 # oh-my-zsh
