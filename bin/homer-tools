@@ -110,7 +110,6 @@ elif type "apt" > /dev/null; then
 else
   echo "--- Skipping: No yay command found -------------------"
 fi
-sudo apt install powerline
 
 
 ##############################################################
@@ -123,7 +122,6 @@ elif type "apt" > /dev/null; then
 else
   echo "--- Skipping: No yay command found -------------------"
 fi
-sudo apt install fzf
 
 
 ##############################################################
