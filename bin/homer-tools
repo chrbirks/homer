@@ -222,8 +222,8 @@ fi
 ##############################################################
 # svls
 echo "--- Installing svls -------------------------------"
-echo "--- Skipping svls for now -------------------------"
 if type "cargo" > /dev/null; then
+  pip2 install jedi
   cargo install svls
 else
   echo "Skipping: No cargo command found -----------------------"
