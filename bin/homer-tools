@@ -64,7 +64,8 @@ echo "--- Installing required packages -------------------------------"
 if type "yay" > /dev/null; then
   sudo pacman -S zsh yay git meld curl ripgrep tmux xsel xclip rust vim cmake autoconf
 elif type "apt" > /dev/null; then
-  sudo apt install zsh wget meld curl ripgrep tmux xsel xclip rustc vim make cmake autoconf python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev
+  sudo apt install zsh wget meld curl tmux xsel xclip rustc vim make cmake autoconf python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev
+  cargo install ripgrep --features 'pcre2'
 else
   echo "--- ERROR: Not Arch or Debian system -------------------"
   exit 1
@@ -83,8 +84,8 @@ RUNZSH=no KEEP_ZSHRC=yes sh -c "$(wget -O- https://raw.githubusercontent.com/ohm
 
 ##############################################################
 # Fonts
-# Install the p10k prefered MesloLGS NF font
-echo "--- Installing MesloLGS NF font ----------------------"
+# Install the p10k and Spacemacs prefered fonts
+echo "--- Installing MesloLGS NF and Hack NF fonts ----------------------"
 if type "yay" > /dev/null; then
   yay -S ttf-meslo-nerd-font-powerlevel10k nerd-fonts-hack
   # Update user and root font cache
@@ -93,8 +94,15 @@ if type "yay" > /dev/null; then
   echo "--- NOTE: Restart your terminal for fonts to be updated"
 elif type "apt" > /dev/null; then
   wget -O - https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip > /tmp/Meslo.zip
-  mkdir ~/.local/share/fonts
-  unzip /tmp/Meslo.zip -d ~/.local/share/fonts/
+  sudo mkdir /usr/share/fonts/truetype/meslo-nerdfont/
+  sudo unzip /tmp/Meslo.zip -d /usr/share/fonts/truetype/meslo-nerdfont
+  wget -O - https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip > /tmp/Hack.zip
+  sudo mkdir /usr/share/fonts/truetype/hack-nerdfont/
+  sudo unzip /tmp/Hack.zip -d /usr/share/fonts/truetype/hack-nerdfont
+  # Update user and root font cache
+  fc-cache -f -v
+  sudo fc-cache -f -v
+  echo "--- NOTE: Restart your terminal for fonts to be updated"
 else
   echo "--- Skipping: No yay command found -------------------"
 fi
@@ -257,8 +265,9 @@ echo "--- 1) Open $XDG_CONFIG_HOME/zsh/.p10k.zsh and insert the following modeli
 	vivado_env\n
 	questa_env\n
 	vcs_env"
-echo "--- 2) Open $XDG_CONFIG_HOME/tmux/.tmux.conf and install plugins with prefix + I, prefix + U"
-echo "--- 3) Restart open terminals"
-echo "--- 4) Start Tmux and reload Tmux config file"
-echo "--- 5) Start Spacemacs for the first time and a ~/.config/spacemacs/.spacemacs.env will be generated. Verify the contents."
+echo "--- 2) In .p10k.zsh add hg to POWERLEVEL9K_VCS_BACKENDS"
+echo "--- 3) Open $XDG_CONFIG_HOME/tmux/.tmux.conf and install plugins with prefix + I, prefix + U"
+echo "--- 4) Restart open terminals"
+echo "--- 5) Start Tmux and reload Tmux config file"
+echo "--- 6) Start Spacemacs for the first time and a ~/.config/spacemacs/.spacemacs.env will be generated. Verify the contents."
 
