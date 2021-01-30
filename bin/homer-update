@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+# Pull changes from origin, rebase, and push to origin
+
+source "$HOMER_PATH/share/homer/cli.zsh"
+homer_update_repo
+echo "Updated homer directory $HOMER_HOME with the latest changes!"
