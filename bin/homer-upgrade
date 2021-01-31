@@ -1,0 +1,158 @@
+#!/bin/zsh
+
+# Upgrade all tools in homer-tools where applicable.
+# Does not include tools installed by package managers.
+
+# TODO: Catch errors and better printing
+
+# FIXME: Move this to somewhere else
+export XDG_CONFIG_HOME=~/.config
+
+source "$HOMER_PATH/share/homer/cli.zsh"
+
+## Parse script arguments
+#zmodload zsh/zutil
+#zparseopts -D -E -F - m:=msg -message:=msg t:=tmpl_dir -template:=tmpl_dir || exit 1
+## Remove first -- or -
+#end_opts=$@[(i)(--|-)]
+#set -- "${@[0,end_opts-1]}" "${@[end_opts+1,-1]}"
+#
+#msg=$msg[2]
+#tmpl_dir=$tmpl_dir[2]
+#
+## Check that $tmpl_dir is set and exists
+#if [ -z "$tmpl_dir" ]; then
+#  echo Usage: $(basename "$0") "-t|--template DIR/REPO [-m|--message MESSAGE]"
+#  exit 1
+#elif [ ! -d "$tmpl_dir" ]; then
+#  echo Directory does not exist: "$tmpl_dir"
+#  exit 1
+#fi
+
+#if ! type "pacman" > /dev/null; then
+#  echo "--- Error: No pacman command found"
+#  exit 1
+#fi
+#if ! type "apt" > /dev/null; then
+#  echo "--- Error: No pacman or apt command found"
+#  exit 1
+#fi
+
+##############################################################
+# oh-my-zsh
+# Skip: is updated automatically
+
+
+##############################################################
+# Fonts
+# Install the p10k and Spacemacs prefered fonts
+# Skip
+
+
+# ##############################################################
+# # fzf
+# echo "--- Installing command-line fuzzy finder -------------"
+# if type "yay" > /dev/null; then
+#   yay -S fzf
+# elif type "apt" > /dev/null; then
+#   sudo apt install fzf
+# else
+#   echo "--- Skipping: No yay command found -------------------"
+# fi
+
+
+##############################################################
+# zsh plugins
+echo "--- Upgrading Zsh plugin fzf-zsh-completions -----------"
+# git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+pushd .
+cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+git pull
+popd
+
+echo "--- Upgrading Zsh plugin zsh-autosuggestions -----------"
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+pushd .
+cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+git pull
+popd
+
+echo "--- Upgrading Zsh plugin zsh-syntax-highlighting -------"
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+pushd .
+cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+git pull
+popd
+
+
+##############################################################
+# p10k
+echo "--- Upgrading Powerlevel10k ---------------------------"
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+pushd .
+cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+git pull
+popd
+
+
+##############################################################
+# emacs-dev
+echo "--- Upgrading Emacs from source ---------------------"
+# git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
+pushd .
+cd $HOME/etc/emacs-dev || exit 1
+git pull
+make clean && ./autogen.sh && ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && make
+popd
+
+
+# ##############################################################
+# # Chemacs Emacs profile switcher
+# echo "--- Upgrading Chemacs from source ------------------"
+# # git clone https://github.com/plexus/chemacs.git $HOME/etc/chemacs
+# pushd .
+# cd $HOME/etc/chemacs || exit 1
+# ./install.sh
+# popd
+
+
+##############################################################
+# spacemacs
+echo "--- Upgrading Spacemacs from source ------------------"
+# git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
+pushd .
+cd $HOME/etc/spacemacs.d || exit 1
+git pull
+popd
+
+
+##############################################################
+# hdl_checker
+echo "--- Upgrading hdl-checker -----------------------------"
+if type "pip" > /dev/null; then
+  pip install hdl-checker --user --upgrade
+else
+  echo "Skipping: No pip command found -----------------------"
+fi
+
+
+##############################################################
+# svls
+echo "--- Upgrading svls -------------------------------"
+if type "cargo" > /dev/null; then
+  cargo install svls
+else
+  echo "Skipping: No cargo command found -----------------------"
+fi
+
+
+##############################################################
+# tmux tpm plugin manager
+echo "--- Upgrading Tmux Plugin Manager -----------"
+# git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+pushd .
+cd $HOME/.tmux/plugins/tpm
+git pull
+popd
+
+echo "--- Upgrades finished ------------------------------"
