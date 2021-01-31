@@ -61,8 +61,9 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 # cmake (for compiling libvterm)
 
 echo "--- Installing required packages -------------------------------"
-if type "yay" > /dev/null; then
+if type "pacman" > /dev/null; then
   sudo pacman -S zsh yay git meld curl ripgrep tmux xsel xclip rust vim cmake autoconf
+  # TODO: sudo yay -S <nice_to_have_like_youtube-dl_etc>
 elif type "apt" > /dev/null; then
   sudo apt install zsh wget meld curl tmux xsel xclip rustc vim make cmake autoconf python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev
   cargo install ripgrep --features 'pcre2'
