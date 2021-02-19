@@ -210,7 +210,22 @@ if [ $? -eq 0 ]; then
   git checkout develop
   popd
 else
-  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/spacemacs.d"
+fi
+
+
+##############################################################
+# doom emacs
+echo "--- Installing Doom Emacs from source ------------------"
+git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/etc/doom-emacs.d
+if [ $? -eq 0 ]; then
+  pushd .
+  cd $HOME/etc/doom-emacs.d || exit 1
+  git checkout develop
+  $HOME/etc/doom-emacs.d/bin/doom install
+  popd
+else
+  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/doom-emacs.d"
 fi
 
 
