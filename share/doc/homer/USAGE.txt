@@ -7,9 +7,11 @@ type `man homer`.
 Commands:
 
 - help      View this and other command help.
-- init      Initialize a home directory. Use -c to clone an existing
-            home directory repo.
 - tools     Install packages, libraries and programs required. Works
             on Arch and Debian based systems.
+- init      Initialize a home directory. Can use a directory, or
+            local or remote Git repo as a template.
+- upgrade   Upgrade tools installed with homer tools.
+- update    Update dotfiles from Git repo.
 
 Type `homer help COMMAND` to get help on a particular command.

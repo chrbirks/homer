@@ -103,6 +103,10 @@ pushd .
 cd $HOME/etc/emacs-dev || exit 1
 git pull
 make clean && ./autogen.sh && ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && make
+if [ ! $? -eq 0 ]; then
+  echo "ERROR: Emacs install failed"
+  exit 1
+fi
 popd
 
 
