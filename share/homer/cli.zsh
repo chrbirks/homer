@@ -67,6 +67,7 @@ homer_commit_added() {
 homer_update_repo() {
   pushd $HOMER_HOME
   git stash save
+  git fetch; git diff ..origin/master
   git pull --rebase origin master
   git push origin master
   git stash pop
