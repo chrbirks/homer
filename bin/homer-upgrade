@@ -59,6 +59,13 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 # else
 #   echo "--- Skipping: No yay command found -------------------"
 # fi
+##############################################################
+echo "||> Upgrading fzf"
+(pushd .
+cd $FZF_BASE
+git fetch; git diff ..origin/master; git pull
+make install
+popd) | gnomon -t elapsed-total
 
 
 ##############################################################
@@ -101,7 +108,7 @@ echo "||> Upgrading Emacs from source"
 # git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
 (pushd .
 cd $HOME/etc/emacs-dev || exit 1
-git fetch; git diff ..origin/master; git pull
+git fetch; git diff ..origin/emacs-27; git pull
 make clean 1> /dev/null && \
   ./autogen.sh 1> /dev/null && \
   ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
