@@ -129,7 +129,7 @@ echo "||> Upgrading Spacemacs from source"
 # git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
 (pushd .
 cd $HOME/etc/spacemacs.d || exit 1
-git fetch; git diff ..origin/master; git pull
+git fetch; git diff ..origin/develop; git pull
 popd) | gnomon -t elapsed-total
 
 
