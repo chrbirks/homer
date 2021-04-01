@@ -63,51 +63,54 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 
 ##############################################################
 # zsh plugins
-echo "--- Upgrading Zsh plugin fzf-zsh-completions -----------"
+echo "||> Upgrading Zsh plugin fzf-zsh-completions"
 # git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
-pushd .
+(pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
-echo "--- Upgrading Zsh plugin zsh-autosuggestions -----------"
+echo "||> Upgrading Zsh plugin zsh-autosuggestions"
 # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
-pushd .
+(pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
-echo "--- Upgrading Zsh plugin zsh-syntax-highlighting -------"
+echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
-pushd .
+(pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
 
 ##############################################################
 # p10k
-echo "--- Upgrading Powerlevel10k ---------------------------"
+echo "||> Upgrading Powerlevel10k"
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
-pushd .
+(pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
 
 ##############################################################
 # emacs-dev
-echo "--- Upgrading Emacs from source ---------------------"
+echo "||> Upgrading Emacs from source" 
 # git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
-pushd .
+(pushd .
 cd $HOME/etc/emacs-dev || exit 1
 git pull
-make clean && ./autogen.sh && ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && make
+make clean 1> /dev/null && \
+  ./autogen.sh 1> /dev/null && \
+  ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
+  make 1> /dev/null
 if [ ! $? -eq 0 ]; then
   echo "ERROR: Emacs install failed"
   exit 1
 fi
-popd
+popd) | gnomon -t elapsed-total
 
 
 # ##############################################################
@@ -122,41 +125,41 @@ popd
 
 ##############################################################
 # spacemacs
-echo "--- Upgrading Spacemacs from source ------------------"
+echo "||> Upgrading Spacemacs from source"
 # git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
-pushd .
+(pushd .
 cd $HOME/etc/spacemacs.d || exit 1
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
 
 ##############################################################
 # hdl_checker
-echo "--- Upgrading hdl-checker -----------------------------"
+echo "||> Upgrading hdl-checker"
 if type "pip" > /dev/null; then
-  pip install hdl-checker --user --upgrade
+  pip install hdl-checker --user --upgrade | gnomon -t elapsed-total
 else
-  echo "Skipping: No pip command found -----------------------"
+  echo "Skipping: No pip command found"
 fi
 
 
 ##############################################################
 # svls
-echo "--- Upgrading svls -------------------------------"
+echo "||> Upgrading svls"
 if type "cargo" > /dev/null; then
-  cargo install svls
+  (cargo install svls) | gnomon -t elapsed-total
 else
-  echo "Skipping: No cargo command found -----------------------"
+  echo "Skipping: No cargo command found "
 fi
 
 
 ##############################################################
 # tmux tpm plugin manager
-echo "--- Upgrading Tmux Plugin Manager -----------"
+echo "||> Upgrading Tmux Plugin Manager"
 # git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-pushd .
+(pushd .
 cd $HOME/.tmux/plugins/tpm
 git pull
-popd
+popd) | gnomon -t elapsed-total
 
-echo "--- Upgrades finished ------------------------------"
+echo "||> Upgrades finished"
