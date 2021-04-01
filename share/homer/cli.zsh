@@ -67,9 +67,16 @@ homer_commit_added() {
 homer_update_repo() {
   pushd $HOMER_HOME
   git stash save
-  git fetch; git diff ..origin/master
-  git pull --rebase origin master
-  git push origin master
+  git fetch
+  git diff ..origin/master --numstat
+  git diff ..origin/master
+  vared -p 'Proceed with update? [Y/n] ' -c tmp
+  if [[ $tmp == 'y' || $tmp == '' ]]; then
+    git pull --rebase origin master
+    git push origin master
+  else
+    echo 'Skipping update and restoring stash...'
+  fi
   git stash pop
   popd
 }
