@@ -63,8 +63,7 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 echo "||> Upgrading fzf"
 (pushd .
 cd $FZF_BASE
-git fetch; git log ..@{u}; git pull
-make install
+git fetch && git log ..@{u} && git pull && make install
 popd) | gnomon -t elapsed-total
 
 
@@ -75,7 +74,7 @@ echo "||> Upgrading Zsh plugin fzf-zsh-completions"
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrading Zsh plugin zsh-autosuggestions"
@@ -83,7 +82,7 @@ echo "||> Upgrading Zsh plugin zsh-autosuggestions"
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
@@ -91,7 +90,7 @@ echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -102,7 +101,7 @@ echo "||> Upgrading Powerlevel10k"
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -113,7 +112,7 @@ echo "||> Upgrading Emacs from source"
 (pushd .
 cd $HOME/etc/emacs-dev || exit 1
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 make clean 1> /dev/null && \
   ./autogen.sh 1> /dev/null && \
   ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
@@ -142,7 +141,7 @@ echo "||> Upgrading Spacemacs from source"
 (pushd .
 cd $HOME/etc/spacemacs.d || exit 1
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -173,7 +172,7 @@ echo "||> Upgrading Tmux Plugin Manager"
 (pushd .
 cd $HOME/.tmux/plugins/tpm
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch; git log ..@{u}; git pull
+git fetch && git log ..@{u} && git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrades finished"
