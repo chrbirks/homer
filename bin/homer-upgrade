@@ -63,7 +63,7 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 echo "||> Upgrading fzf"
 (pushd .
 cd $FZF_BASE
-git fetch; git diff ..origin/master; git pull
+git fetch; git log ..@{u}; git pull
 make install
 popd) | gnomon -t elapsed-total
 
