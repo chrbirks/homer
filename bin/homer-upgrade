@@ -67,21 +67,24 @@ echo "||> Upgrading Zsh plugin fzf-zsh-completions"
 # git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrading Zsh plugin zsh-autosuggestions"
 # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -91,7 +94,8 @@ echo "||> Upgrading Powerlevel10k"
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
 (pushd .
 cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -101,7 +105,8 @@ echo "||> Upgrading Emacs from source"
 # git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
 (pushd .
 cd $HOME/etc/emacs-dev || exit 1
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 make clean 1> /dev/null && \
   ./autogen.sh 1> /dev/null && \
   ./configure --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
@@ -129,7 +134,8 @@ echo "||> Upgrading Spacemacs from source"
 # git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
 (pushd .
 cd $HOME/etc/spacemacs.d || exit 1
-git fetch; git diff ..origin/develop; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 
@@ -159,7 +165,8 @@ echo "||> Upgrading Tmux Plugin Manager"
 # git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 (pushd .
 cd $HOME/.tmux/plugins/tpm
-git fetch; git diff ..origin/master; git pull
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch; git log ..@{u}; git pull
 popd) | gnomon -t elapsed-total
 
 echo "||> Upgrades finished"
