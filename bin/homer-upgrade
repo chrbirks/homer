@@ -59,6 +59,13 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 # else
 #   echo "--- Skipping: No yay command found -------------------"
 # fi
+##############################################################
+echo "||> Upgrading fzf"
+(pushd .
+cd $FZF_BASE
+git fetch; git diff ..origin/master; git pull
+make install
+popd) | gnomon -t elapsed-total
 
 
 ##############################################################
