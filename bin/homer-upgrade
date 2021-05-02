@@ -182,7 +182,7 @@ exec > >(trap "" INT TERM;  sed 's/^/ >> /')
 exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
 cd $HOME/etc/spacemacs.d || exit 1
 # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-# git fetch && git log ..@{u} && git pull
+git fetch && git log ..@{u} && git pull
 popd)
 
 
