@@ -105,6 +105,17 @@ cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
 git fetch && git log ..@{u} && git pull
 popd)
 
+echo "||> Upgrading Zsh plugin forgit"
+# git clone https://github.com/wfxr/forgit ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
+(pushd .
+# Append >> or E>> to each line from here on
+exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
+# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+git fetch && git log ..@{u} && git pull
+popd)
+
 
 ##############################################################
 # p10k
