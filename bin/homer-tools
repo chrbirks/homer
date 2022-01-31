@@ -60,13 +60,24 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 # xclip (for tmux)
 # cmake (for compiling libvterm)
 
+echo "--- Making sure zsh is set up properly -------------------------------"
+echo "# Must be placed under ~/.zshenv for zsh to find it.
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8" > ~/tmp/.zshenv
+
 echo "--- Installing required packages -------------------------------"
 if type "pacman" > /dev/null; then
-  sudo pacman -S zsh yay git meld curl ripgrep tmux xsel xclip rust vim cmake autoconf gcc fakeroot patch base-devel fd
+  # sudo pacman -S zsh yay git meld curl ripgrep tmux xsel xclip rust vim cmake autoconf gcc fakeroot patch base-devel fd
+  sudo pacman -S yay base-devel
   # TODO: sudo yay -S <nice_to_have_like_youtube-dl_etc>
 elif type "apt" > /dev/null; then
-  sudo apt install zsh wget meld curl tmux xsel xclip rustc vim make cmake autoconf python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev
-  cargo install ripgrep --features 'pcre2'
+  sudo apt install rustc python3 python3-pip texinfo libgtk-3-dev libwebkit2gtk-4.0-dev gnutls-bin libtiff-dev libgif-dev libjpeg-dev libxpm-dev libgnutls28-dev libncurses-dev libjansson-dev ttf-ancient-fonts
+  # cargo install ripgrep --features 'pcre2'
 else
   echo "--- ERROR: Not Arch or Debian system -------------------"
   exit 1
@@ -162,46 +173,49 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 
 
 ##############################################################
-# alacritty
-echo "--- Installing Alacritty ---------------------------"
-if type "yay" > /dev/null; then
-  yay -S alacritty
-elif type "apt" > /dev/null; then
-  sudo apt install libfontconfig libfontconfig1-dev libxmu-dev libxmu-headers freeglut3-dev libxext-dev libxi-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
-  cargo install alacritty
-else
-  echo "--- Skipping: No yay command found -----------------"
-fi
+# # alacritty
+# echo "--- Installing Alacritty ---------------------------"
+# if type "yay" > /dev/null; then
+#   yay -S alacritty
+# elif type "apt" > /dev/null; then
+#   sudo apt install libfontconfig libfontconfig1-dev libxmu-dev libxmu-headers freeglut3-dev libxext-dev libxi-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+#   cargo install alacritty
+# else
+#   echo "--- Skipping: No yay command found -----------------"
+# fi
 
 
 ##############################################################
-# emacs-dev
-echo "--- Installing Emacs from source ---------------------"
-git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
-if [ $? -eq 0 ]; then
-  pushd .
-  cd $HOME/etc/emacs-dev || exit 1
-  # git checkout emacs-27
-  if type "/usr/bin/clang" > /dev/null; then
-      export CC=/usr/bin/clang
-      echo "CC=/usr/bin/clang"
-  fi
-  if type "/usr/bin/gcc" > /dev/null; then
-      export CXX=/usr/bin/gcc
-      echo "CXX=/usr/bin/gcc"
-  fi
-  make clean && \
-      ./autogen.sh && \
-      ./configure --with-json --with-native-compilation --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && \
-      make -j16
-  if [ ! $? -eq 0 ]; then
-    echo "ERROR: Emacs install failed"
-    exit 1
-  fi
-  popd
-else
-  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
-fi
+# # emacs-dev
+# echo "--- Installing Emacs from source ---------------------"
+# sudo apt install
+# git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
+# if [ $? -eq 0 ]; then
+#   pushd .
+#   cd $HOME/etc/emacs-dev || exit 1
+#   # git checkout emacs-27
+#   if type "/usr/bin/clang" > /dev/null; then
+#       export CC=/usr/bin/clang
+#       echo "CC=/usr/bin/clang"
+#   fi
+#   if type "/usr/bin/gcc" > /dev/null; then
+#       export CXX=/usr/bin/gcc
+#       echo "CXX=/usr/bin/gcc"
+#       export CC="gcc-10"
+#       echo "CC=gcc-10"
+#   fi
+#   make clean && \
+#       ./autogen.sh && \
+#       ./configure --with-json --with-native-compilation --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz && \
+#       make -j16
+#   if [ ! $? -eq 0 ]; then
+#     echo "ERROR: Emacs install failed"
+#     exit 1
+#   fi
+#   popd
+# else
+#   echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+# fi
 
 
 ##############################################################

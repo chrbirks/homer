@@ -49,16 +49,6 @@ source "$HOMER_PATH/share/homer/cli.zsh"
 # Skip
 
 
-# ##############################################################
-# # fzf
-# echo "--- Installing command-line fuzzy finder -------------"
-# if type "yay" > /dev/null; then
-#   yay -S fzf
-# elif type "apt" > /dev/null; then
-#   sudo apt install fzf
-# else
-#   echo "--- Skipping: No yay command found -------------------"
-# fi
 ##############################################################
 echo "||> Upgrading fzf"
 (pushd .
@@ -132,34 +122,38 @@ popd)
 
 
 ##############################################################
-# emacs-dev
-echo "||> Upgrading Emacs from source" 
-# git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd $HOME/etc/emacs-dev || exit 1
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-echo "Building Emacs from source..."
-if type "/usr/bin/clang" > /dev/null; then
-  export CC=/usr/bin/clang
-  echo "CC=/usr/bin/clang"
-fi
-if type "/usr/bin/gcc" > /dev/null; then
-  export CXX=/usr/bin/gcc
-  echo "CXX=/usr/bin/gcc"
-fi
-make clean 1> /dev/null && \
-  ./autogen.sh 1> /dev/null && \
-  ./configure --with-json --with-native-compilation --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
-  make -j16 1> /dev/null
-if [ ! $? -eq 0 ]; then
-  echo "ERROR: Emacs install failed"
-  exit 1
-fi
-popd)
+# # emacs-dev
+# echo "||> Upgrading Emacs from source"
+# # git clone git://git.sv.gnu.org/emacs.git $HOME/etc/emacs-dev
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd $HOME/etc/emacs-dev || exit 1
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch
+# # git log ..@{u}
+# # Show changes to etc/NEWS before pulling
+# git log -p master...origin/master etc/NEWS
+# git pull
+# echo "Building Emacs from source..."
+# if type "/usr/bin/clang" > /dev/null; then
+#   export CC=/usr/bin/clang
+#   echo "CC=/usr/bin/clang"
+# fi
+# if type "/usr/bin/gcc" > /dev/null; then
+#   export CXX=/usr/bin/gcc
+#   echo "CXX=/usr/bin/gcc"
+# fi
+# make clean 1> /dev/null && \
+#   ./autogen.sh 1> /dev/null && \
+#   ./configure --with-json --with-native-compilation --with-modules --without-xft --with-xwidgets --with-gconf --with-cairo --with-harfbuzz 1> /dev/null && \
+#   make -j16 1> /dev/null
+# if [ ! $? -eq 0 ]; then
+#   echo "ERROR: Emacs install failed"
+#   exit 1
+# fi
+# popd)
 
 
 # ##############################################################
