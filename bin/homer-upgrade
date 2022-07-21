@@ -62,63 +62,63 @@ popd)
 
 ##############################################################
 # zsh plugins
-echo "||> Upgrading Zsh plugin fzf-zsh-completions"
-# git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# echo "||> Upgrading Zsh plugin fzf-zsh-completions"
+# # git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
-echo "||> Upgrading Zsh plugin zsh-autosuggestions"
-# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# echo "||> Upgrading Zsh plugin zsh-autosuggestions"
+# # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
-echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
-# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# echo "||> Upgrading Zsh plugin zsh-syntax-highlighting"
+# # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
-echo "||> Upgrading Zsh plugin forgit"
-# git clone https://github.com/wfxr/forgit ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# echo "||> Upgrading Zsh plugin forgit"
+# # git clone https://github.com/wfxr/forgit ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
 
 ##############################################################
 # p10k
-echo "||> Upgrading Powerlevel10k"
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# echo "||> Upgrading Powerlevel10k"
+# # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
 
 ##############################################################
@@ -167,17 +167,17 @@ popd)
 
 
 ##############################################################
-# spacemacs
-echo "||> Upgrading Spacemacs from source"
-# git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd $HOME/etc/spacemacs.d || exit 1
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# # spacemacs
+# echo "||> Upgrading Spacemacs from source"
+# # git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd $HOME/etc/spacemacs.d || exit 1
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
 
 ##############################################################
@@ -207,16 +207,16 @@ fi)
 
 
 ##############################################################
-# tmux tpm plugin manager
-echo "||> Upgrading Tmux Plugin Manager"
-# git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-(pushd .
-# Append >> or E>> to each line from here on
-exec > >(trap "" INT TERM;  sed 's/^/ >> /')
-exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
-cd $HOME/.tmux/plugins/tpm
-# Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
-git fetch && git log ..@{u} && git pull
-popd)
+# # tmux tpm plugin manager
+# echo "||> Upgrading Tmux Plugin Manager"
+# # git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+# (pushd .
+# # Append >> or E>> to each line from here on
+# exec > >(trap "" INT TERM;  sed 's/^/ >> /')
+# exec 2> >(trap "" INT TERM; sed 's/^/E>> /' >&2)
+# cd $HOME/.tmux/plugins/tpm
+# # Fetch; show commits on remotes/branch not already on local branch, pull. ..@{u} is short for HEAD@{upstream}
+# git fetch && git log ..@{u} && git pull
+# popd)
 
 echo "||> Upgrades finished"

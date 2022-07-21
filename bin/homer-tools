@@ -153,23 +153,23 @@ else
   echo "--- Skipping: No yay command found -----------------"
 fi
 
-echo "--- Installing Zsh plugin fzf-zsh-completions -----------"
-git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
+# echo "--- Installing Zsh plugin fzf-zsh-completions -----------"
+# git clone https://github.com/chitoku-k/fzf-zsh-completions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/fzf-zsh-completions
 
-echo "--- Installing Zsh plugin zsh-autosuggestions -----------"
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
+# echo "--- Installing Zsh plugin zsh-autosuggestions -----------"
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-autosuggestions
 
-echo "--- Installing Zsh plugin zsh-syntax-highlighting -------"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
+# echo "--- Installing Zsh plugin zsh-syntax-highlighting -------"
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-syntax-highlighting
 
-echo "--- Installing Zsh plugin forgit -------"
-git clone https://github.com/wfxr/forgit ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
+# echo "--- Installing Zsh plugin forgit -------"
+# git clone https://github.com/wfxr/forgit ${ZSH_CUSTOM:-$ZSH/custom}/plugins/forgit
 
 
 ##############################################################
 # p10k
-echo "--- Installing Powerlevel10k ---------------------------"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
+# echo "--- Installing Powerlevel10k ---------------------------"
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$ZSH/custom}/themes/powerlevel10k
 
 
 ##############################################################
@@ -220,45 +220,45 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 
 ##############################################################
 # Chemacs Emacs profile switcher
-echo "--- Installing Chemacs from source ------------------"
-git clone https://github.com/plexus/chemacs.git $HOME/etc/chemacs
-if [ $? -eq 0 ]; then
-  pushd .
-  cd $HOME/etc/chemacs || exit 1
-  ./install.sh
-  popd
-else
-  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
-fi
+# echo "--- Installing Chemacs from source ------------------"
+# git clone https://github.com/plexus/chemacs.git $HOME/etc/chemacs
+# if [ $? -eq 0 ]; then
+#   pushd .
+#   cd $HOME/etc/chemacs || exit 1
+#   ./install.sh
+#   popd
+# else
+#   echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/emacs-dev"
+# fi
 
 
 ##############################################################
 # spacemacs
-echo "--- Installing Spacemacs from source ------------------"
-git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
-if [ $? -eq 0 ]; then
-  pushd .
-  cd $HOME/etc/spacemacs.d || exit 1
-  git checkout develop
-  popd
-else
-  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/spacemacs.d"
-fi
+# echo "--- Installing Spacemacs from source ------------------"
+# git clone https://github.com/syl20bnr/spacemacs $HOME/etc/spacemacs.d
+# if [ $? -eq 0 ]; then
+#   pushd .
+#   cd $HOME/etc/spacemacs.d || exit 1
+#   git checkout develop
+#   popd
+# else
+#   echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/spacemacs.d"
+# fi
 
 
 ##############################################################
 # doom emacs
-echo "--- Installing Doom Emacs from source ------------------"
-git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/etc/doom-emacs.d
-if [ $? -eq 0 ]; then
-  pushd .
-  cd $HOME/etc/doom-emacs.d || exit 1
-  git checkout develop
-  $HOME/etc/doom-emacs.d/bin/doom install
-  popd
-else
-  echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/doom-emacs.d"
-fi
+# echo "--- Installing Doom Emacs from source ------------------"
+# git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/etc/doom-emacs.d
+# if [ $? -eq 0 ]; then
+#   pushd .
+#   cd $HOME/etc/doom-emacs.d || exit 1
+#   git checkout develop
+#   $HOME/etc/doom-emacs.d/bin/doom install
+#   popd
+# else
+#   echo "--- Skipping: Target directory already exists and is not empty: $HOME/etc/doom-emacs.d"
+# fi
 
 
 ##############################################################
@@ -302,9 +302,9 @@ sudo locale-gen
 
 ##############################################################
 # tmux tpm plugin manager
-echo "--- Installing Tmux Plugin Manager -----------"
-#git clone https://github.com/tmux-plugins/tpm $HOME/etc/tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+# echo "--- Installing Tmux Plugin Manager -----------"
+# #git clone https://github.com/tmux-plugins/tpm $HOME/etc/tmux/plugins/tpm
+# git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
 echo "--- Installations finished ------------------------------"
 echo "--- Things to do manually:"
